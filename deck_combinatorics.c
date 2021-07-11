@@ -36,13 +36,17 @@ int search_for_deck(void)
 {
     unsigned char cards[CARDS_IN_DECK];
     int cards_found = 0;
+    int cards_left = CARDS_IN_DECK;
     int card;
 
     memset(cards, 0, CARDS_IN_DECK);
 
-    for (cards_found = 0; !deck_is_full(cards); cards_found++) {
-        card = rand() % 52;
-        cards[card] = 1;
+    for (cards_found = 0; cards_left > 0; cards_found++) {
+        card = rand() % CARDS_IN_DECK;
+        if (!cards[card]) {
+            cards[card] = 1;
+            cards_left--;
+        }
     }
 
     return cards_found;
